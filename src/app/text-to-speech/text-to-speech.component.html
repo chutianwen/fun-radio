@@ -6,11 +6,22 @@
 <!--  <textarea id="text" style="width: 500px; height: 300px">Hello, how are you today ?</textarea>-->
 <!--</div>-->
 
-<h1>Tweets</h1>
+<h1 class="type--bold-36 color--neutral-black">Tweets</h1>
+<div class="c40__rule theme-bg-color--dark"></div>
 <div *ngFor="let tweet of tweets">
-  Tweet: {{tweet}}
+  <p >
+    <span class="type--roman-16 color--neutral-black"> Tweet: {{tweet.text}}</span>
+    <br>
+    <span class="type--roman-14 color--neutral-dark-gray">AlreadyRead: {{tweet.isRead}}</span>
+  </p>
+
+
 </div>
 
-<button id="play" (click)="play()"> Play </button>
-<button id="pause" (click)="pause()"> Pause </button>
-<button id="resume" (click)="resume()"> Resume </button>
+<div class="atc-button--dark">
+  <a class="atc-button " (click)="play()">Play this list</a>
+  <a class="atc-button" (click)="pause()">Pause</a>
+  <a class="atc-button" (click)="resume()">Resume</a>
+</div>
+
+

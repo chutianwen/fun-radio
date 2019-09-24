@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {TweetsMocked} from "../tweet";
+import {Tweet, TweetsMocked} from "../tweet";
 import Speech from "speak-tts";
 
 @Component({
@@ -10,7 +10,7 @@ import Speech from "speak-tts";
 export class TextToSpeechComponent implements OnInit {
 
   speech: Speech;
-  tweets: String[];
+  tweets: Tweet[];
 
   addVoiceList(voices) {
     const list = window.document.createElement("div");
@@ -25,7 +25,6 @@ export class TextToSpeechComponent implements OnInit {
     window.document.body.appendChild(list);
   }
 
-
   play(){
     // this._play(this.tweets.toString())
     this._playRecursive(0);
@@ -33,37 +32,44 @@ export class TextToSpeechComponent implements OnInit {
 
   _playRecursive(i: number){
     if(i < this.tweets.length) {
-      this.speech
-        .speak({
-          text: this.tweets[i], //textarea.value,
-          queue: false,
-          listeners: {
-            onstart: () => {
-              console.log("Start utterance");
-            },
-            onend: () => {
-              console.log("End utterance");
-            },
-            onresume: () => {
-              console.log("Resume utterance");
-            },
-            onboundary: event => {
-              console.log(
-                event.name +
-                " boundary reached after " +
-                event.elapsedTime +
-                " milliseconds."
-              );
+      console.log(this.tweets);
+      if (this.tweets[i].isRead) {
+        this._playRecursive(i + 1);
+      }else {
+        console.log("Now playing:" +  i);
+        this.speech
+          .speak({
+            text: this.tweets[i].text, //textarea.value,
+            queue: false,
+            listeners: {
+              onstart: () => {
+                console.log("Start utterance");
+              },
+              onend: () => {
+                console.log("End utterance");
+              },
+              onresume: () => {
+                console.log("Resume utterance");
+              },
+              onboundary: event => {
+                console.log(
+                  event.name +
+                  " boundary reached after " +
+                  event.elapsedTime +
+                  " milliseconds."
+                );
+              }
             }
-          }
-        })
-        .then(data => {
-          this._playRecursive(i + 1);
-          console.log("Success !", data);
-        })
-        .catch(e => {
-          console.error("An error occurred :", e);
-        });
+          })
+          .then(data => {
+            this.tweets[i].isRead = true;
+            this._playRecursive(i + 1);
+            console.log("Success !", data);
+          })
+          .catch(e => {
+            console.error("An error occurred :", e);
+          });
+      }
     }
   }
 

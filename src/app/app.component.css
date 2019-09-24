@@ -1,0 +1,15 @@
+.type--roman-14 {
+  font-weight: 400;
+  letter-spacing: .025rem;
+}
+.type--bold-14, .type--roman-14 {
+  font-family: Helvetica Neue LT,Helvetica Neue,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;
+  font-size: .87rem;
+  line-height: 1.5rem;
+}
+.color--neutral-dark-gray {
+  color: #657786;
+}
+.color--neutral-black {
+  color: #14171a;
+}
